@@ -14,10 +14,10 @@
 <meta property="og:description" content="题目设计25年年初huggingface爆发了一波模型投毒的浪潮，主要针对的是pytorch的供应链pickle和keras的供应链h5。 本题对于后者进行模拟，根据供题要求难度，选择了无隐写的lambda层进行投毒。 WriteUp 通过查看keras版本，调整对应的tensorflow版本  最终配置环境为tensorflow&#x3D;&#x3D;2.15.0，keras&#x3D;&amp;#x3">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://example.com/2025/09/02/DamnEnv/image-20250325200326852.png">
-<meta property="og:image" content="http://example.com/image-20250325200202097.png">
+<meta property="og:image" content="http://example.com/2025/09/02/DamnEnv/image-20250325200205163.png">
 <meta property="og:image" content="http://example.com/2025/09/02/DamnEnv/image-20250325213838806.png">
 <meta property="article:published_time" content="2025-09-02T10:57:04.000Z">
-<meta property="article:modified_time" content="2025-09-02T11:09:35.320Z">
+<meta property="article:modified_time" content="2025-09-02T11:47:17.337Z">
 <meta property="article:author" content="Cain">
 <meta property="article:tag" content="MyChall">
 <meta property="article:tag" content="第三届“天网杯”">
@@ -158,7 +158,7 @@
       
         <time datetime="2025-09-02T10:57:04.000Z" class="dt-published" itemprop="datePublished">2025-09-02</time>
         
-        (Updated: <time datetime="2025-09-02T11:09:35.320Z" class="dt-updated" itemprop="dateModified">2025-09-02</time>)
+        (Updated: <time datetime="2025-09-02T11:47:17.337Z" class="dt-updated" itemprop="dateModified">2025-09-02</time>)
         
       
     </div>
@@ -186,7 +186,7 @@
 <p>最终配置环境为tensorflow&#x3D;&#x3D;2.15.0，keras&#x3D;&#x3D;2.15.0，python&#x3D;&#x3D;3.9.12</p>
 </li>
 <li><p>加载模型，发现被注入了恶意脚本</p>
-<p><img src="/image-20250325200202097.png"></p>
+<p><img src="/2025/09/02/DamnEnv/image-20250325200205163.png"></p>
 </li>
 <li><p>查看模型数据和摘要</p>
 <figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">print</span>(<span class="string">&quot;模型摘要:&quot;</span>)</span><br><span class="line">model.summary()</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i, layer <span class="keyword">in</span> <span class="built_in">enumerate</span>(model.layers):</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">f&quot;第 <span class="subst">&#123;i&#125;</span> 层: <span class="subst">&#123;layer.name&#125;</span>, 类型: <span class="subst">&#123;<span class="built_in">type</span>(layer).__name__&#125;</span>&quot;</span>)</span><br></pre></td></tr></table></figure>
