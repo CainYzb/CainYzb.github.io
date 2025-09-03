@@ -16,7 +16,7 @@
 <meta property="og:image" content="http://example.com/2025/09/02/DamnEnv/025-09-03-15-23-39.png">
 <meta property="og:image" content="http://example.com/2025/09/02/DamnEnv/025-09-03-17-50-34.png">
 <meta property="article:published_time" content="2025-09-03T07:28:43.000Z">
-<meta property="article:modified_time" content="2025-09-03T10:12:14.038Z">
+<meta property="article:modified_time" content="2025-09-03T10:19:09.056Z">
 <meta property="article:author" content="Cain">
 <meta property="article:tag" content="MyChall">
 <meta property="article:tag" content="第三届“天网杯”">
@@ -157,7 +157,7 @@
       
         <time datetime="2025-09-03T07:28:43.000Z" class="dt-published" itemprop="datePublished">2025-09-03</time>
         
-        (Updated: <time datetime="2025-09-03T10:12:14.038Z" class="dt-updated" itemprop="dateModified">2025-09-03</time>)
+        (Updated: <time datetime="2025-09-03T10:19:09.056Z" class="dt-updated" itemprop="dateModified">2025-09-03</time>)
         
       
     </div>
@@ -193,7 +193,7 @@
 <li><p><em>当你拿着农夫山泉出现时，小孩会发现我见过这个！激动的<strong>肯定</strong>这是一瓶矿泉水。</em></p>
 </li>
 </ul>
-<p>不妨这样认为<br>$$<br>小孩 \rightarrow 模型\<br>{可乐，农夫山泉} \rightarrow 训练集\<br>{芬达、雪碧、农夫山泉} \rightarrow 测试集<br>$$</p>
+<p>不妨这样认为<br>$$<br>\begin{array}<br>小孩 \rightarrow 模型 \\<br>\{可乐，农夫山泉\} \rightarrow 训练集 \\<br>\{芬达、雪碧、农夫山泉\} \rightarrow 测试集<br>\end{array}<br>$$</p>
 <p>那么上面的三个情况，就分别对应：</p>
 <ul>
 <li>模型对<strong>未知</strong>样本预测</li>
@@ -207,7 +207,7 @@
 <p>考虑到该题不符合该考点题目要求难度，因此未放出。</p>
 <p>那剩下的数据呢？是否也存在这样的关系？只是不容易被肉眼看出？</p>
 <h1 id="Why-not-try-the-more-difficult-one"><a href="#Why-not-try-the-more-difficult-one" class="headerlink" title="Why not try the more difficult one?"></a>Why not try the more difficult one?</h1><h2 id="赛题介绍"><a href="#赛题介绍" class="headerlink" title="赛题介绍"></a>赛题介绍</h2><p>题目连接后如下<br><img src="/2025/09/02/DamnEnv/025-09-03-15-23-39.png"></p>
-<p>通过题目给出的，模型对于 $ idx $ 样本的 $ {pred}_{top_10} $ 预测值，进行判断：<em><strong>这个样本是否存在于当前模型的训练集中？</strong></em><br>(本题的题目简介应该注明题目交互方式。虽然赛中选手们都基本根据报错猜到了，但还是抱歉。)</p>
+<p>通过题目给出的，模型对于 $ idx $ 样本的 $ {pred}_{top_{10}} $ 预测值，进行判断：<em><strong>这个样本是否存在于当前模型的训练集中？</strong></em><br>(本题的题目简介应该注明题目交互方式。虽然赛中选手们都基本根据报错猜到了，但还是抱歉。)</p>
 <h2 id="How2solve"><a href="#How2solve" class="headerlink" title="How2solve"></a>How2solve</h2><h3 id="模型的通性"><a href="#模型的通性" class="headerlink" title="模型的通性"></a>模型的通性</h3><p>为了节省读论文的时间，我会用一种更抽象、但更快速的方式解释。</p>
 <p>有两个模型 $A$ 和 $B$ ，每个模型有自己的训练集 $T_a$ 和 $T_b$</p>
 <p>模型预测是函数： $A(x)$ 和 $B(x)$ ， $x$ 是样本。<br>例如：$A(T_a)$ 表示， $A$ 模型在自己的训练集 $T_a$ 上的预测结果。</p>
@@ -240,6 +240,11 @@
 <td>2</td>
 <td>[[0.01, 0.008, …, 0.53]]</td>
 <td>out</td>
+</tr>
+<tr>
+<td></td>
+<td>……</td>
+<td></td>
 </tr>
 </tbody></table>
 </li>
