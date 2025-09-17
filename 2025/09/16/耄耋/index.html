@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="题目设计本题给出了数千张小猫的图片，数据分为两类：AI生成和人工拍摄，期望选手对数据完成区分，即完成 人工智能生成图片伪造检测技术。 WriteUp关于深度伪造图片检测的其中一种方向是：把 GAN 生成 “频域不一致” 量化为检测特征。 Zhang. 等人发现 GAN 图像在 DCT&#x2F;FFT 域的高频能量显著低于真实图像 IEEE T-IFS 2020 ：Leveraging High-">
+<meta property="og:type" content="article">
+<meta property="og:title" content="耄耋">
+<meta property="og:url" content="http://example.com/2025/09/16/%E8%80%84%E8%80%8B/index.html">
+<meta property="og:site_name" content="Cain&#39;s Blog">
+<meta property="og:description" content="题目设计本题给出了数千张小猫的图片，数据分为两类：AI生成和人工拍摄，期望选手对数据完成区分，即完成 人工智能生成图片伪造检测技术。 WriteUp关于深度伪造图片检测的其中一种方向是：把 GAN 生成 “频域不一致” 量化为检测特征。 Zhang. 等人发现 GAN 图像在 DCT&#x2F;FFT 域的高频能量显著低于真实图像 IEEE T-IFS 2020 ：Leveraging High-">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/2025/09/15/Blind/5-09-16-15-52-52.png">
+<meta property="article:published_time" content="2025-09-16T07:08:56.000Z">
+<meta property="article:modified_time" content="2025-09-17T06:06:07.308Z">
+<meta property="article:author" content="Cain">
+<meta property="article:tag" content="MyChall">
+<meta property="article:tag" content="第五届“湾区杯”Final">
+<meta property="article:tag" content="AIGC Image Detect">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/2025/09/15/Blind/5-09-16-15-52-52.png">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/Cain.png">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/Cain.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/Cain.png">
+        
+      
+    
+    <!-- title -->
+    <title>耄耋</title>
+    <!-- async scripts -->
+    <!-- Google Analytics -->
+
+
+    <!-- Umami Analytics -->
+
+
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+		<script type="text/x-mathjax-config">
+		  MathJax.Hub.Config({
+			tex2jax: {
+			  skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+			  inlineMath: [['$','$']]
+			}
+		  });
+		</script>
+		<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML' async></script>
+	
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa-solid fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a href="/links/">links</a></li><!--
+     --><!--
+       --><li><a href="/search/">Search</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        
+        <li><a class="icon" aria-label="Next post" href="/2025/09/15/Blind/"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Share post" href="#"><i class="fa-solid fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://example.com/2025/09/16/%E8%80%84%E8%80%8B/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://example.com/2025/09/16/%E8%80%84%E8%80%8B/&text=耄耋"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://example.com/2025/09/16/%E8%80%84%E8%80%8B/&title=耄耋"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://example.com/2025/09/16/%E8%80%84%E8%80%8B/&is_video=false&description=耄耋"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=耄耋&body=Check out this article: http://example.com/2025/09/16/%E8%80%84%E8%80%8B/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://example.com/2025/09/16/%E8%80%84%E8%80%8B/&title=耄耋"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://example.com/2025/09/16/%E8%80%84%E8%80%8B/&title=耄耋"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://example.com/2025/09/16/%E8%80%84%E8%80%8B/&title=耄耋"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://example.com/2025/09/16/%E8%80%84%E8%80%8B/&title=耄耋"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://example.com/2025/09/16/%E8%80%84%E8%80%8B/&name=耄耋&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://example.com/2025/09/16/%E8%80%84%E8%80%8B/&t=耄耋"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    
+    
+      <div id="toc">
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%A2%98%E7%9B%AE%E8%AE%BE%E8%AE%A1"><span class="toc-number">1.</span> <span class="toc-text">题目设计</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#WriteUp"><span class="toc-number">2.</span> <span class="toc-text">WriteUp</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%90%90%E6%A7%BD"><span class="toc-number">3.</span> <span class="toc-text">吐槽</span></a></li></ol>
+      </div>
+    
+  </span>
+</div>
+
+    
+    <div class="content index py4 ">
+        
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle p-name" itemprop="name headline">
+        耄耋
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span class="p-name" itemprop="name">Cain</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2025-09-16T07:08:56.000Z" class="dt-published" itemprop="datePublished">2025-09-16</time>
+        
+        (Updated: <time datetime="2025-09-17T06:06:07.308Z" class="dt-updated" itemprop="dateModified">2025-09-17</time>)
+        
+      
+    </div>
+
+
+      
+
+      
+    <div class="article-tag">
+        <i class="fa-solid fa-tag"></i>
+        <a class="p-category" href="/tags/AIGC-Image-Detect/" rel="tag">AIGC Image Detect</a>, <a class="p-category" href="/tags/MyChall/" rel="tag">MyChall</a>, <a class="p-category" href="/tags/%E7%AC%AC%E4%BA%94%E5%B1%8A%E2%80%9C%E6%B9%BE%E5%8C%BA%E6%9D%AF%E2%80%9DFinal/" rel="tag">第五届“湾区杯”Final</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content e-content" itemprop="articleBody">
+    <h2 id="题目设计"><a href="#题目设计" class="headerlink" title="题目设计"></a>题目设计</h2><p>本题给出了数千张小猫的图片，数据分为两类：AI生成和人工拍摄，期望选手对数据完成区分，即完成 <em><strong>人工智能生成图片伪造检测技术</strong></em>。</p>
+<h2 id="WriteUp"><a href="#WriteUp" class="headerlink" title="WriteUp"></a>WriteUp</h2><p>关于深度伪造图片检测的其中一种方向是：把 GAN 生成 “频域不一致” 量化为检测特征。</p>
+<p><em>Zhang.</em> 等人发现 GAN 图像在 DCT&#x2F;FFT 域的高频能量显著低于真实图像 <em>IEEE T-IFS 2020</em> ：<a target="_blank" rel="noopener" href="https://orbilu.uni.lu/bitstream/10993/48389/1/2021165667.pdf"><strong>Leveraging High-Frequency Components to Expose GAN-Forged Faces</strong></a></p>
+<p>之后人们就走上了，通过频域分析模型生成模式方案中。</p>
+<p><img src="/2025/09/15/Blind/5-09-16-15-52-52.png"></p>
+<p>上图展示了不同的两幅图片，在截取高频后统计量之间的区别。</p>
+<p>更通常的，对于 GAN&#x2F;Deepfake 图像，通常 high-freq ratio 在 0.15 以上，而真实照片的high-freq ratio低于 0.10。</p>
+<p>涉及的两个重要超参数分别是：</p>
+<ol>
+<li>THRESHOLD_RADIUS_RATIO ：多少百分比算“高频”</li>
+<li>Delta ：大于（小于）多少算伪造（真实）图片</li>
+</ol>
+<p>最终exp</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">from</span> PIL <span class="keyword">import</span> Image</span><br><span class="line"><span class="keyword">import</span> torch</span><br><span class="line"><span class="keyword">import</span> torch.fft</span><br><span class="line"></span><br><span class="line">THRESHOLD_RADIUS_RATIO = <span class="number">0.85</span>  <span class="comment"># 外围多少百分比算“高频”</span></span><br><span class="line">delta = <span class="number">0.125</span> <span class="comment"># 阈值</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">load_gray_tensor</span>(<span class="params">path: <span class="built_in">str</span></span>) -&gt; torch.Tensor:</span><br><span class="line">    img = Image.<span class="built_in">open</span>(path).convert(<span class="string">&quot;L&quot;</span>)</span><br><span class="line">    arr = np.asarray(img, dtype=np.float32) / <span class="number">255.0</span></span><br><span class="line">    arr = (arr - <span class="number">0.5</span>) * <span class="number">2</span></span><br><span class="line">    <span class="keyword">return</span> torch.from_numpy(arr)[<span class="literal">None</span>, <span class="literal">None</span>, :, :]</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">fft_magnitude</span>(<span class="params">tensor: torch.Tensor</span>):</span><br><span class="line">    fft = torch.fft.fft2(tensor)</span><br><span class="line">    fft_shift = torch.fft.fftshift(fft, dim=(-<span class="number">2</span>, -<span class="number">1</span>))</span><br><span class="line">    mag = torch.<span class="built_in">abs</span>(fft_shift)</span><br><span class="line">    mag_log = torch.log1p(mag)</span><br><span class="line">    mag_log -= mag_log.<span class="built_in">min</span>()</span><br><span class="line">    mag_log /= mag_log.<span class="built_in">max</span>() + <span class="number">1e-8</span></span><br><span class="line">    <span class="keyword">return</span> mag_log[<span class="number">0</span>, <span class="number">0</span>].numpy()</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">high_freq_ratio</span>(<span class="params">mag: torch.Tensor, ratio: <span class="built_in">float</span> = THRESHOLD_RADIUS_RATIO</span>):</span><br><span class="line">    h, w = mag.shape[-<span class="number">2</span>:]</span><br><span class="line">    cy, cx = h // <span class="number">2</span>, w // <span class="number">2</span></span><br><span class="line">    Y, X = torch.meshgrid(</span><br><span class="line">        torch.arange(h, dtype=torch.float32) - cy,</span><br><span class="line">        torch.arange(w, dtype=torch.float32) - cx,</span><br><span class="line">        indexing=<span class="string">&quot;ij&quot;</span></span><br><span class="line">    )</span><br><span class="line">    dist = torch.sqrt(X ** <span class="number">2</span> + Y ** <span class="number">2</span>)</span><br><span class="line">    radius = <span class="built_in">min</span>(cy, cx) * ratio</span><br><span class="line">    mask_high = dist &gt;= radius</span><br><span class="line">    total_energy = mag.<span class="built_in">sum</span>()</span><br><span class="line">    high_energy = mag[..., mask_high].<span class="built_in">sum</span>()</span><br><span class="line">    <span class="keyword">return</span> (high_energy / total_energy).item()</span><br><span class="line"></span><br><span class="line">f = <span class="built_in">open</span>(<span class="string">&#x27;耄耋/exp/res.csv&#x27;</span>, <span class="string">&#x27;w&#x27;</span>)</span><br><span class="line">f.write(<span class="string">f&#x27;idx,detection\n&#x27;</span>)</span><br><span class="line"></span><br><span class="line">real_dir = <span class="string">&#x27;耄耋/exp/dataset&#x27;</span></span><br><span class="line"><span class="keyword">for</span> fname <span class="keyword">in</span> os.listdir(real_dir):</span><br><span class="line">    <span class="keyword">if</span> fname.lower().endswith((<span class="string">&#x27;.png&#x27;</span>)):</span><br><span class="line">        file = os.path.join(real_dir, fname)</span><br><span class="line"></span><br><span class="line">        tensor = load_gray_tensor(file)</span><br><span class="line">        mag_np = fft_magnitude(tensor)</span><br><span class="line">        ratio = high_freq_ratio(torch.<span class="built_in">abs</span>(torch.fft.fftshift(torch.fft.fft2(tensor))))</span><br><span class="line">        res = <span class="string">&#x27;fake&#x27;</span> <span class="keyword">if</span> ratio &gt; delta <span class="keyword">else</span> <span class="string">&#x27;real&#x27;</span></span><br><span class="line">        f.write(<span class="string">f&#x27;<span class="subst">&#123;fname[:-<span class="number">4</span>]&#125;</span>,<span class="subst">&#123;res&#125;</span>\n&#x27;</span>)</span><br><span class="line"></span><br><span class="line">f.close()</span><br></pre></td></tr></table></figure>
+
+<h2 id="吐槽"><a href="#吐槽" class="headerlink" title="吐槽"></a>吐槽</h2><p>由于我的蠢蛋问题(<del>也许是Koali的</del>)，每次这样的校验题目，总是会留下非预期 orz</p>
+<p>下面是一份WrtieUp (By <em>晨曦</em>)</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"><span class="keyword">import</span> copy</span><br><span class="line"></span><br><span class="line">url = <span class="string">&#x27;http://172.36.111.73:5000/upload&#x27;</span></span><br><span class="line"></span><br><span class="line">headers = &#123;<span class="string">&quot;Content-Type&quot;</span>:<span class="string">&quot;multipart/form-data; boundary=----WebKitFormBoundaryFgG5yR6Y9veJTmnI&quot;</span>&#125;</span><br><span class="line"></span><br><span class="line">file_data = <span class="built_in">open</span>(<span class="string">&#x27;res.csv&#x27;</span>,<span class="string">&#x27;r&#x27;</span>).read().split(<span class="string">&#x27;\n&#x27;</span>)</span><br><span class="line"></span><br><span class="line">cat_data = &#123;i:<span class="string">&quot;fake&quot;</span> <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">2293</span>)&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">data = <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">------WebKitFormBoundaryFgG5yR6Y9veJTmnI</span></span><br><span class="line"><span class="string">Content-Disposition: form-data; name=&quot;file&quot;; filename=&quot;result.csv&quot;</span></span><br><span class="line"><span class="string">Content-Type: text/csv</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">[file_data]</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">------WebKitFormBoundaryFgG5yR6Y9veJTmnI--</span></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span>.strip()</span><br><span class="line"></span><br><span class="line">new_data = <span class="string">&quot;idx,detection\n&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1</span>,<span class="number">2293</span>):</span><br><span class="line">    fake_tmp = copy.copy(file_data)</span><br><span class="line">    real_tmp = copy.copy(file_data)</span><br><span class="line">    real_tmp[i] = real_tmp[i].replace(<span class="string">&#x27;fake&#x27;</span>,<span class="string">&#x27;real&#x27;</span>)</span><br><span class="line">    fake_data = <span class="string">&#x27;\n&#x27;</span>.join(fake_tmp)</span><br><span class="line">    real_data = <span class="string">&#x27;\n&#x27;</span>.join(real_tmp)</span><br><span class="line">    fake_data = data.replace(<span class="string">&#x27;[file_data]&#x27;</span>,fake_data)</span><br><span class="line">    real_data = data.replace(<span class="string">&#x27;[file_data]&#x27;</span>,real_data)</span><br><span class="line">    </span><br><span class="line">    fake_res = requests.post(url,data=fake_data,headers=headers).text</span><br><span class="line">    real_res = requests.post(url,data=real_data,headers=headers).text</span><br><span class="line">    <span class="comment"># print(json.loads(fake_res),json.loads(real_res))</span></span><br><span class="line">    </span><br><span class="line">    fake_num = <span class="built_in">float</span>(fake_res.split(<span class="string">&#x27;%&#x27;</span>)[<span class="number">0</span>].split(<span class="string">&#x27; &#x27;</span>)[<span class="number">1</span>])</span><br><span class="line">    real_num = <span class="built_in">float</span>(real_res.split(<span class="string">&#x27;%&#x27;</span>)[<span class="number">0</span>].split(<span class="string">&#x27; &#x27;</span>)[<span class="number">1</span>])</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">if</span> fake_num &gt;= real_num:</span><br><span class="line">        tmp = <span class="built_in">str</span>(i-<span class="number">1</span>) + <span class="string">&#x27;,fake\n&#x27;</span></span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        tmp = <span class="built_in">str</span>(i-<span class="number">1</span>) + <span class="string">&#x27;,real\n&#x27;</span></span><br><span class="line">    new_data += tmp</span><br><span class="line"></span><br><span class="line"><span class="built_in">open</span>(<span class="string">&#x27;res1.csv&#x27;</span>,<span class="string">&#x27;w&#x27;</span>).write(<span class="built_in">str</span>(new_data))</span><br></pre></td></tr></table></figure>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+        
+          <li><a href="/">Home</a></li>
+        
+          <li><a href="/about/">About</a></li>
+        
+          <li><a href="/archives/">Writing</a></li>
+        
+          <li><a href="/links/">links</a></li>
+        
+          <li><a href="/search/">Search</a></li>
+        
+      </ul>
+    </div>
+
+    
+    
+      <div id="toc-footer" style="display: none">
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%A2%98%E7%9B%AE%E8%AE%BE%E8%AE%A1"><span class="toc-number">1.</span> <span class="toc-text">题目设计</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#WriteUp"><span class="toc-number">2.</span> <span class="toc-text">WriteUp</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%90%90%E6%A7%BD"><span class="toc-number">3.</span> <span class="toc-text">吐槽</span></a></li></ol>
+      </div>
+    
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://example.com/2025/09/16/%E8%80%84%E8%80%8B/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://example.com/2025/09/16/%E8%80%84%E8%80%8B/&text=耄耋"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://example.com/2025/09/16/%E8%80%84%E8%80%8B/&title=耄耋"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://example.com/2025/09/16/%E8%80%84%E8%80%8B/&is_video=false&description=耄耋"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=耄耋&body=Check out this article: http://example.com/2025/09/16/%E8%80%84%E8%80%8B/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://example.com/2025/09/16/%E8%80%84%E8%80%8B/&title=耄耋"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://example.com/2025/09/16/%E8%80%84%E8%80%8B/&title=耄耋"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://example.com/2025/09/16/%E8%80%84%E8%80%8B/&title=耄耋"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://example.com/2025/09/16/%E8%80%84%E8%80%8B/&title=耄耋"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://example.com/2025/09/16/%E8%80%84%E8%80%8B/&name=耄耋&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://example.com/2025/09/16/%E8%80%84%E8%80%8B/&t=耄耋"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa-solid fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        
+          <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fa-solid fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa-solid fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2025
+    Cain
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a href="/links/">links</a></li><!--
+     --><!--
+       --><li><a href="/search/">Search</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script>
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script>
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="fa-regular fa-clone"></i>';
+    btn += '</span>';
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+</body>
+</html>
