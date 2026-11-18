@@ -169,7 +169,8 @@ nav a,nav button{color:#b4c5bd}nav .nav-menu{color:var(--accent)}
 .story-copy h1{animation-delay:45ms}
 .story-sub{animation-delay:95ms}
 .story-section{animation-delay:145ms}
-.story-section p{font-size:clamp(14px,1.16vw,17px);line-height:1.95}
+.story-section h3{font-size:12px}
+.story-section p{font-size:clamp(13px,1.08vw,16px);line-height:1.95}
 .story-section p+p{margin-top:.85em}
 .travelling-glass{
   position:fixed;pointer-events:none;z-index:10;object-fit:contain;
@@ -194,7 +195,6 @@ nav a,nav button{color:#b4c5bd}nav .nav-menu{color:var(--accent)}
   .hero-art::after{background:linear-gradient(0deg,#212326,transparent 45%),linear-gradient(90deg,#21232690,transparent 65%)}
   .drink-figure{position:relative;top:auto;height:auto;aspect-ratio:1.35}
   .drink-figure .studio-scene{--height:65%;--baseline:81%}
-  .story-section p{font-size:14px}
 }
 
 .flavor-profile{--star-width:78px;max-width:100%;color:var(--paper)}
