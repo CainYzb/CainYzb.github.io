@@ -270,24 +270,8 @@ nav a,nav button{color:#b4c5bd}nav .nav-menu{color:var(--accent)}
 .like-count{min-width:1ch;padding-left:8px;border-left:1px solid #45534d;color:#89d5b6;font:12px var(--mono);font-variant-numeric:tabular-nums}
 .like-button:active,.like-button.just-liked{border-color:var(--accent);color:#80d4af}
 .just-liked .ico{fill:currentColor}
-#like-dialog{width:min(360px,calc(100% - 32px));max-height:calc(100dvh - 28px);margin:auto;padding:clamp(20px,4vmin,30px);border:1px solid #46564f;border-radius:12px;background:#222625;color:var(--paper);box-shadow:0 22px 80px #0008}
-#like-dialog::backdrop{background:rgb(10 13 12 / 74%)}
-.like-drink-name{margin:0 0 8px;color:#78d2ac;font:italic 38px/1.05 var(--serif);overflow-wrap:anywhere}
-#like-title{font-size:18px;font-weight:600;margin:0 0 6px}
-#like-scope{margin:0 0 22px;color:#adb7b2;font-size:12px;line-height:1.6}
-#like-dialog label{display:block;margin:0 0 7px;font-size:13px}
-#like-password{width:100%;min-height:46px;padding:8px 12px;border:1px solid #5e6c65;border-radius:5px;background:#1a1e1c;font:16px var(--mono);color:var(--paper)}
-#like-password:focus{outline:2px solid #6fcba5;outline-offset:2px}
-#like-password[aria-invalid=true]{outline-color:#e4a296}
-#like-message{min-height:18px;margin:7px 0 10px;color:#edb0a2;font:12px/1.5 Arial,sans-serif}
-.like-dialog-actions{display:flex;gap:10px;justify-content:flex-end}
-.like-dialog-actions button{min-height:44px;padding:0 18px;border-radius:5px;border:1px solid var(--line);font-size:13px}
-#like-submit{background:#79d1ad;color:#11271c;font-weight:600;border-color:transparent}
-.like-dialog-actions button:disabled{opacity:.65}
 @media(prefers-reduced-motion:no-preference){
-  #like-dialog[open]{animation:like-appear .2s ease-out}
   .just-liked .ico{animation:like-beat .35s ease-out}
-  @keyframes like-appear{from{opacity:0;transform:translateY(6px)}}
   @keyframes like-beat{45%{transform:scale(1.2)}}
 }
 .stock-label{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}

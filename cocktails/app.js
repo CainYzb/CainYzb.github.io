@@ -113,7 +113,7 @@ function renderDrink(i){
     <article class="spread">
       <figure class="drink-figure">${scene(i,'reading-photo')}${soldOut[i]?soldOutMask:''}<figcaption><span>Cain's Homebar</span><span class="mono">${menuLabel(i)}</span></figcaption></figure>
       <div class="story-copy"><div class="story-topline"><div class="eyebrow"><i></i> CLASSIC COCKTAIL · ${d.selection || num(i+1)}</div>
-      <button type="button" class="like-button" aria-haspopup="dialog" aria-controls="like-dialog">${icon('like-heart')}<span class="like-label">点赞</span><span class="like-count" aria-live="polite">…</span></button></div>
+      <button type="button" class="like-button">${icon('like-heart')}<span class="like-label">点赞</span><span class="like-count" aria-live="polite">…</span></button></div>
       <h1 tabindex="-1" id="reading-title">${words.join(' ')} <em>${last}.</em></h1>
       ${soldOut[i]?'<div class="story-sub"><span class="stock-badge">卖完了</span></div>':''}
       ${flavorProfile(i)}
@@ -183,7 +183,6 @@ function settleGlass(moving,target){
 let requestedHash=null;
 async function route(source=null,restore=false){
   const version=++routeVersion;
-  drinkLikes.close();
   finishFlight();
   const hash=location.hash, i=indexFor(hash), previous=indexFor(displayedHash);
   requestedHash=hash;
