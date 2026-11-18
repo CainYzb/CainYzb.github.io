@@ -1,5 +1,6 @@
 const $ = id => document.getElementById(id);
 const num = n => String(n).padStart(2,'0');
+const menuLabel = i => drinks[i].selection || 'NO. '+num(i+1);
 const icon = name => '<svg class="ico" aria-hidden="true"><use href="#'+name+'"/></svg>';
 const photo = (i,small=false) => './assets/classics/'+(small?'cards/':'')+drinks[i].slug+'.webp';
 const drinkUrl = i => '#drink/'+drinks[i].slug;
@@ -17,7 +18,7 @@ const unavailableIngredients = new Set([
   '咖啡利口酒','杏仁利口酒','百香果利口酒','黑莓利口酒','紫罗兰利口酒',
   '马拉斯奇诺樱桃利口酒','马拉斯奇诺利口酒','橙味库拉索','法勒南香料糖酒',
   '绿查特酒','黄查特酒','诺尼诺阿玛罗苦酒','本笃草本利口酒',
-  '白兰地','干邑','皮斯科白兰地'
+  '白兰地','干邑','皮斯科白兰地','冰镇香槟'
 ]);
 const soldOut = drinks.map(drink=>drink.ingredients.some(([name])=>unavailableIngredients.has(name)));
 const available = drinks.map((_,i)=>i).filter(i=>!soldOut[i]);
@@ -55,11 +56,11 @@ function glassStyle(i){
   return `--ratio:${ratio};--foot:${foot}%;--mat:${mat}%`;
 }
 function scene(i,id=''){
-  return `<div class="studio-scene" style="${glassStyle(i)}"><div class="glass-stand"><span class="coaster" aria-hidden="true"></span><img class="glass" ${id?'id="'+id+'"':''} data-drink="${drinks[i].slug}" src="${photo(i,!id)}" alt="${drinks[i].cn}" ${id?'fetchpriority="high"':'loading="lazy" decoding="async"'}></div></div>`;
+  return `<div class="studio-scene" style="${glassStyle(i)}"><div class="glass-stand"><span class="coaster" aria-hidden="true"></span><img class="glass" ${id?'id="'+id+'"':''} data-drink="${drinks[i].slug}" src="${photo(i,!id)}" alt="${drinks[i].name}" ${id?'fetchpriority="high"':'loading="lazy" decoding="async"'}></div></div>`;
 }
 function card(i){
   const d=drinks[i];
-  return `<article class="card${soldOut[i]?' is-sold-out':''}"><a href="${drinkUrl(i)}" class="card-main"><div class="card-pic"><span class="card-no">NO. ${num(i+1)}</span>${scene(i)}${soldOut[i]?soldOutMask:''}</div><div class="card-body"><div class="card-title"><h3>${d.name}</h3></div><div class="card-info"><span>${d.cn}</span><small>${d.flavor}</small></div>${flavorProfile(i)}</div></a></article>`;
+  return `<article class="card${soldOut[i]?' is-sold-out':''}"><a href="${drinkUrl(i)}" class="card-main"><div class="card-pic"><span class="card-no">${menuLabel(i)}</span>${scene(i)}${soldOut[i]?soldOutMask:''}</div><div class="card-body"><div class="card-title"><h3>${d.name}</h3><div class="card-info"><small>${d.flavor}</small></div></div>${flavorProfile(i)}</div></a></article>`;
 }
 function renderMenu(){
   $('cards').innerHTML=drinks.map((d,i)=>activeFlavor==='all'||activeFlavor===d.flavor?card(i):'').join('');
@@ -70,13 +71,12 @@ function showFeatured(index,direction=0){
   const words=d.name.split(' ');
   $('hero-last').textContent=words.pop()+'.';
   $('hero-first').textContent=words.join(' ');
-  $('hero-cn').textContent=d.cn;
   $('hero-profile').innerHTML=flavorProfile(index);
   const img=$('hero-img');
   img.closest('.studio-scene').style.cssText=glassStyle(index);
   img.dataset.drink=d.slug;
   img.src=photo(index);
-  img.alt=d.cn;
+  img.alt=d.name;
   $('hero-detail').href=drinkUrl(index);
   $('slide-no').textContent=num(index+1);
   try{sessionStorage.setItem('homebar-last-pick',d.slug);}catch{}
@@ -111,9 +111,10 @@ function renderDrink(i){
       <div class="page-turn"><span class="mono">${num(i+1)} <i>/</i> ${drinks.length}</span>
       <a class="circle prev" href="${drinkUrl((i+drinks.length-1)%drinks.length)}" aria-label="上一杯酒">${icon('arrow')}</a><a class="circle" href="${drinkUrl((i+1)%drinks.length)}" aria-label="下一杯酒">${icon('arrow')}</a></div></div>
     <article class="spread">
-      <figure class="drink-figure">${scene(i,'reading-photo')}${soldOut[i]?soldOutMask:''}<figcaption><span>Cain's Homebar</span><span class="mono">NO. ${num(i+1)}</span></figcaption></figure>
-      <div class="story-copy"><div class="eyebrow"><i></i> CLASSIC COCKTAIL · ${num(i+1)}</div>
-      <h1 tabindex="-1" id="reading-title">${words.join(' ')} <em>${last}.</em></h1><div class="story-sub"><h2>${d.cn}</h2>${soldOut[i]?'<span class="stock-badge">卖完了</span>':''}</div>
+      <figure class="drink-figure">${scene(i,'reading-photo')}${soldOut[i]?soldOutMask:''}<figcaption><span>Cain's Homebar</span><span class="mono">${menuLabel(i)}</span></figcaption></figure>
+      <div class="story-copy"><div class="eyebrow"><i></i> CLASSIC COCKTAIL · ${d.selection || num(i+1)}</div>
+      <h1 tabindex="-1" id="reading-title">${words.join(' ')} <em>${last}.</em></h1>
+      ${soldOut[i]?'<div class="story-sub"><span class="stock-badge">卖完了</span></div>':''}
       ${flavorProfile(i)}
       <section class="story-section"><h3>背景</h3>${d.story.map(p=>`<p>${p}</p>`).join('')}</section>
       </div>
@@ -200,7 +201,7 @@ async function route(source=null,restore=false){
   document.body.classList.toggle('reading',i>=0);
   if(i>=0) renderDrink(i);
   else $('reader').replaceChildren();
-  document.title=i>=0?drinks[i].cn+" · Cain's Homebar":homeTitle;
+  document.title=i>=0?drinks[i].name+" · Cain's Homebar":homeTitle;
   const destination=restore&&Number.isFinite(state.y)?state.y:hash==='#menu'?$('menu').offsetTop:0;
   window.scrollTo({top:destination,behavior:'instant'});
   const target=i>=0?$('reading-photo'):previous>=0?(state.fromHero?$('hero-img'):document.querySelector('#cards a[href="'+drinkUrl(previous)+'"] .glass')):null;

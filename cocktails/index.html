@@ -2,7 +2,7 @@
 <html lang="zh-CN">
 <head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="theme-color" content="#1d1f21"><meta name="description" content="Cain's Homebar 家庭酒单。翻阅五十款经典鸡尾酒，按口味、风格、酒精感、甜度和酸度，挑选今晚的那一杯。">
+<meta name="theme-color" content="#1d1f21"><meta name="description" content="Cain's Homebar 家庭酒单。翻阅经典鸡尾酒与本店加选酒款，按口味、风格、酒精感、甜度和酸度，挑选今晚的那一杯。">
 <title>Cain's Homebar · 酒单</title>
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 48'%3E%3Crect width='48' height='48' rx='10' fill='%231d1f21'/%3E%3Ctext x='6' y='37' font-size='39' fill='%232bbc8a'%3E✳%3C/text%3E%3C/svg%3E">
 <link rel="preload" as="font" href="./assets/instrument-serif.ttf" type="font/ttf" crossorigin>
@@ -28,15 +28,14 @@
 <div class="hero-inside">
 <div class="hero-copy" id="hero-copy" aria-live="polite"><div class="eyebrow"><i></i>BARTENDER’S PICK <span>/</span> 调酒师精选</div>
 <h1><span id="hero-first"></span><em id="hero-last"></em></h1>
-<h2 id="hero-cn"></h2>
 <div id="hero-profile"></div>
 <div class="hero-actions"><a href="#menu" id="hero-detail" class="button-red">探索这杯酒 <svg class="ico"><use href="#diagonal"/></svg></a></div>
 </div>
 <div class="seal" aria-hidden="true"><svg viewBox="0 0 100 100"><defs><path id="sealpath" d="M 50,50 m -37,0 a 37,37 0 1,1 74,0 a 37,37 0 1,1 -74,0"/></defs><circle cx="50" cy="50" r="47"/><text><textPath href="#sealpath" startOffset="0" textLength="232">CAIN'S HOMEBAR ✦ HOUSE SELECTION ✦ </textPath></text><g transform="translate(32 32)" fill="none" stroke="currentColor" stroke-width="1.5"><path d="m2 8 16 16L34 8ZM18 24v9m-7 0h14M9 15h18M24 13l6-11"/><circle cx="28" cy="6" r="2.5" fill="currentColor"/></g></svg></div>
-<div class="hero-control"><span class="mono"><b id="slide-no">01</b><i></i><b class="total-count" id="hero-total">50</b></span><button class="circle prev" id="prev" aria-label="上一杯精选"><svg class="ico"><use href="#arrow"/></svg></button><button class="circle" id="next" aria-label="下一杯精选"><svg class="ico"><use href="#arrow"/></svg></button></div>
+<div class="hero-control"><span class="mono"><b id="slide-no">01</b><i></i><b class="total-count" id="hero-total"></b></span><button class="circle prev" id="prev" aria-label="上一杯精选"><svg class="ico"><use href="#arrow"/></svg></button><button class="circle" id="next" aria-label="下一杯精选"><svg class="ico"><use href="#arrow"/></svg></button></div>
 </div></section>
-<section id="menu" class="menu"><div class="menu-head"><div><div class="eyebrow"><i></i> DRINKS INTERNATIONAL · 2026 TOP 50</div><h2>Cocktail <em>Menu</em><span>酒单</span></h2></div>
-<div class="filters" role="group" aria-label="按风味筛选"><button data-filter="all" aria-pressed="true">全部 <small id="menu-total">50</small></button><button data-filter="清新">清新</button><button data-filter="果香">果香</button><button data-filter="醇厚">醇厚</button></div></div>
+<section id="menu" class="menu"><div class="menu-head"><div><div class="eyebrow"><i></i> DRINKS INTERNATIONAL · 2026 TOP 50 + 本店加选</div><h2>Cocktail <em>Menu</em><span>酒单</span></h2></div>
+<div class="filters" role="group" aria-label="按风味筛选"><button data-filter="all" aria-pressed="true">全部 <small id="menu-total"></small></button><button data-filter="清新">清新</button><button data-filter="果香">果香</button><button data-filter="醇厚">醇厚</button></div></div>
 <div class="grid" id="cards"></div></section>
 </main>
 <main id="reader" hidden></main>

@@ -155,6 +155,7 @@ nav a,nav button{color:#b4c5bd}nav .nav-menu{color:var(--accent)}
 .card-pic::after{z-index:1;pointer-events:none;background:none}
 .card-pic .card-no{z-index:2}
 .card-main{display:block}
+.card-title .card-info{flex:none;margin-top:0}
 .card:hover .glass-stand>.glass{transform:none}
 .card-pic .glass-stand{transition:translate .4s cubic-bezier(.2,.7,.2,1)}
 @media(hover:hover) and (prefers-reduced-motion:no-preference){.card:hover .card-pic .glass-stand{translate:0 -3px}}
@@ -169,8 +170,8 @@ nav a,nav button{color:#b4c5bd}nav .nav-menu{color:var(--accent)}
 .story-copy h1{animation-delay:45ms}
 .story-sub{animation-delay:95ms}
 .story-section{animation-delay:145ms}
-.story-section h3{font-size:12px}
-.story-section p{font-size:clamp(13px,1.08vw,16px);line-height:1.95}
+.story-section h3{font-size:13px}
+.story-section p{font-size:12px;line-height:1.95}
 .story-section p+p{margin-top:.85em}
 .travelling-glass{
   position:fixed;pointer-events:none;z-index:10;object-fit:contain;
