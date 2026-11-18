@@ -7,7 +7,7 @@
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 48'%3E%3Crect width='48' height='48' rx='10' fill='%231d1f21'/%3E%3Ctext x='6' y='37' font-size='39' fill='%232bbc8a'%3E✳%3C/text%3E%3C/svg%3E">
 <link rel="preload" as="font" href="./assets/instrument-serif.ttf" type="font/ttf" crossorigin>
 <link rel="preload" as="image" href="./assets/studio-wall.webp">
-<link rel="stylesheet" href="./style.css"><script defer src="./catalog.js"></script><script defer src="./app.js"></script></head>
+<link rel="stylesheet" href="./style.css"><script defer src="./catalog.js"></script><script defer src="./likes.js"></script><script defer src="./app.js"></script></head>
 <body>
 <svg class="symbols" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><defs>
 <symbol id="star" viewBox="0 0 32 32"><g stroke="currentColor" stroke-width="3.3"><path d="M16 1v30M1 16h30M5.4 5.4l21.2 21.2M5.4 26.6L26.6 5.4"/></g></symbol>
@@ -17,6 +17,7 @@
 <symbol id="diagonal" viewBox="0 0 24 24"><path d="M5 19 18 6M6 6h12v12"/></symbol>
 <symbol id="dice" viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="3" transform="rotate(-12 12 12)"/><g stroke-width="2.8" stroke-linecap="round"><path d="M8.2 9.5h.01M12 12h.01M15.8 14.5h.01"/></g></symbol>
 <symbol id="close-icon" viewBox="0 0 24 24"><path d="m6 6 12 12M18 6 6 18"/></symbol>
+<symbol id="like-heart" viewBox="0 0 24 24"><path d="M20.3 4.9a5 5 0 0 0-7.1 0L12 6.1l-1.2-1.2a5 5 0 0 0-7.1 7.1l8.3 8.2 8.3-8.2a5 5 0 0 0 0-7.1Z"/></symbol>
 </defs></svg>
 <header><div class="top-inner">
 <a class="brand" href="#top" aria-label="Cain's Homebar 首页"><svg aria-hidden="true"><use href="#star"/></svg><span>Cain's Homebar</span></a>
@@ -39,5 +40,16 @@
 <div class="grid" id="cards"></div></section>
 </main>
 <main id="reader" hidden></main>
+<dialog id="like-dialog" aria-labelledby="like-title" aria-describedby="like-scope">
+  <form id="like-form">
+    <p class="like-drink-name" id="like-drink"></p>
+    <h2 id="like-title">给这杯酒点赞</h2>
+    <p id="like-scope">点赞数保存在这台设备的当前浏览器中。</p>
+    <label for="like-password">点赞密码</label>
+    <input id="like-password" type="password" autocomplete="off" autocapitalize="none" spellcheck="false" enterkeyhint="done" required maxlength="128" aria-describedby="like-message" autofocus>
+    <p id="like-message" role="status"></p>
+    <div class="like-dialog-actions"><button type="button" id="like-cancel">取消</button><button type="submit" id="like-submit">确认点赞</button></div>
+  </form>
+</dialog>
 <footer><a href="#top" class="footer-brand">Cain's Homebar</a><span class="mono">HOUSE COCKTAILS</span><a href="#top">返回首页 ↑</a></footer>
 </body></html>
